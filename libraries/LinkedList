@@ -1,0 +1,94 @@
+using '../libraries/new';
+
+type LinkedListNode{
+    int value;
+    ^LinkedListNode next;
+}
+type LinkedList{
+    ^LinkedListNode head;
+    ^LinkedListNode tail;
+}
+
+
+function void LinkedList_add(var ^LinkedList root, var int add_value){
+    var ^LinkedListNode tailnode;
+    if(root^.head = 0){
+        root^.head := new(LinkedListNode);
+        root^.head^.value := add_value;
+        root^.tail := root^.head;
+    }else{
+        tailnode := new(LinkedListNode);
+        root^.tail^.next := tailnode;
+        root^.tail := tailnode;
+        root^.tail^.value := add_value;
+    }
+}
+
+function ^LinkedListNode LinkedList_get_element_pointer_by_index(var ^LinkedList root, var int search_index){
+    return LinkedListNode_get_element_pointer_by_index(root^.head,0,search_index);
+}
+
+function ^LinkedListNode LinkedList_get_element_pointer_by_value(var ^LinkedList root, var int search_value){
+    return LinkedListNode_get_element_pointer_by_value(root^.head,search_value);
+}
+
+
+function int LinkedList_get_element_value_by_index(var ^LinkedList root, var int search_index){
+    var ^LinkedListNode node_pointer;
+    node_pointer := LinkedList_get_element_pointer_by_index(root,search_index);
+    if(node_pointer != -1){
+        return node_pointer^.value;
+    }else{
+        return -1;
+    }
+}
+
+function int LinkedList_get_index_by_element_value(var ^LinkedList root, var int search_value){
+    return LinkedListNode_get_index_by_element_value(root^.head, 0, search_value);
+}
+
+function boolean LinkedList_is_empty(var ^LinkedList root){
+    if(root^.head = 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function int LinkedList_size(var ^LinkedList root){
+    if(root^.head = 0){
+        return 0;
+    }else{
+        return LinkedList_get_index_by_element_value(root,root^.tail^.value) + 1;
+    }
+}
+
+function int LinkedListNode_get_index_by_element_value(var ^LinkedListNode node_pointer,var int i, var int search_value){
+    if(node_pointer = 0){
+        return -1;
+    }else if(node_pointer^.value = search_value){
+        return i;
+    }else{
+        return LinkedListNode_get_index_by_element_value(node_pointer^.next,i+1,search_value);
+    }
+}
+
+function ^LinkedListNode LinkedListNode_get_element_pointer_by_index(var ^LinkedListNode node_pointer, var int i,var int search_index){
+    if(node_pointer = 0){
+        return -1;
+    }else if(i = search_index){
+        return node_pointer;
+    }else{
+        return LinkedListNode_get_element_pointer_by_index(node_pointer^.next,i+1,search_index);
+    }
+}
+
+function ^LinkedListNode LinkedListNode_get_element_pointer_by_value(var ^LinkedListNode node_pointer, var int search_value){
+    if(node_pointer = 0){
+        return -1;
+    }else if(node_pointer^.value = search_value){
+        return node_pointer;
+    }else{
+        return LinkedListNode_get_element_pointer_by_value(node_pointer^.next,search_value);
+    }
+}

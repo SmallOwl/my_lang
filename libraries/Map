@@ -1,0 +1,106 @@
+using '../libraries/new';
+
+type MapNode{
+    int value;
+    string key;
+    ^MapNode next;
+}
+type Map{
+    ^MapNode head;
+}
+
+function boolean Map_add(var ^Map map_pointer,var string add_key, var int add_value){
+    if(map_pointer^.head = 0){
+        map_pointer^.head := new(MapNode);
+        map_pointer^.head^.value := add_value;
+        map_pointer^.head^.key := add_key;
+        return true;
+    }else{
+        return MapNode_add(map_pointer^.head,add_key,add_value);
+    }
+}
+
+function boolean Map_contains_by_key(var ^Map map_pointer, var string search_key){
+    return MapNode_contains_by_key(map_pointer^.head,search_key);
+}
+
+function boolean Map_contains_by_value(var ^Map map_pointer, var int search_value){
+    return MapNode_contains_by_value(map_pointer^.head,search_value);
+}
+
+function string Map_get_key_by_value(var ^Map map_pointer, var int search_value){
+    return MapNode_get_key_by_value(map_pointer^.head, search_value);
+}
+
+function string Map_get_value_by_key(var ^Map map_pointer, var string search_key){
+    return MapNode_get_value_by_key(map_pointer^.head, search_key);
+}
+
+function boolean Map_delete_by_key(var ^Map map_pointer, var string search_key){
+    if(map_pointer^.head^.key = search_key){
+        map_pointer^.head := map_pointer^.head^.next;
+        return true;
+    }else{
+        return MapNode_delete_by_key(map_pointer^.head,search_key);
+    }
+}
+
+function boolean MapNode_add(var ^MapNode map_node_pointer, var string add_key, var int add_value){
+    if(map_node_pointer^.key = add_key){
+        return false;
+    }else if(map_node_pointer^.next = 0){
+        map_node_pointer^.next := new(MapNode);
+        map_node_pointer^.next^.key := add_key;
+        map_node_pointer^.next^.value := add_value;
+        return true;
+    }else{
+        return MapNode_add(map_node_pointer^.next,add_key,add_value);
+    }
+}
+
+function boolean MapNode_contains_by_key(var ^MapNode map_node_pointer, var string search_key){
+    if(map_node_pointer = 0){
+        return false;
+    }else if(map_node_pointer^.key = search_key){
+        return true;
+    }else{
+        MapNode_contains_by_key(map_node_pointer^.next,search_key);
+    }
+}
+
+function boolean MapNode_contains_by_value(var ^MapNode map_node_pointer, var int search_value){
+    if(map_node_pointer = 0){
+        return false;
+    }else if(map_node_pointer^.value = search_value){
+        return true;
+    }else{
+        MapNode_contains_by_value(map_node_pointer^.next,search_value);
+    }
+}
+
+function string MapNode_get_key_by_value(var ^MapNode map_node_pointer, var int search_value){
+    if(map_node_pointer^.value = search_value){
+        return map_node_pointer^.key;
+    }else{
+        return MapNode_get_key_by_value(map_node_pointer^.next, search_value);
+    }
+}
+
+function string MapNode_get_value_by_key(var ^MapNode map_node_pointer, var string search_key){
+    if(map_node_pointer^.key = search_key){
+        return map_node_pointer^.value;
+    }else{
+        return MapNode_get_value_by_key(map_node_pointer^.next, search_key);
+    }
+}
+
+function boolean MapNode_delete_by_key(var ^MapNode map_node_pointer, var string search_key){
+    if(map_node_pointer^.next = 0){
+        return false;
+    }else if(map_node_pointer^.next^.key = search_key){
+        map_node_pointer^.next := map_node_pointer^.next^.next;
+        return true;
+    }else{
+        MapNode_delete_by_key(map_node_pointer^.next, search_key);
+    }
+}

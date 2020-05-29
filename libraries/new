@@ -1,0 +1,4 @@
+function pointer new(var int size){
+    SP := SP + size;
+    return SP - size;
+}

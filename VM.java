@@ -24,31 +24,44 @@ public class VM {
                 case PLUS:
                     value_first = dataStack.pop().getValue();
                     value_second = dataStack.pop().getValue();
-                    if(value_first.equals("call")||value_second.equals("call")){
-                        System.out.println("fuck");
+                    try{
+                        value_result = Integer.toString(Integer.valueOf(value_first) + Integer.valueOf(value_second));
+                    }catch(NumberFormatException not_int){
+                        value_result = Double.toString(Double.valueOf(value_first) + Double.valueOf(value_second));
                     }
-                    value_result = Integer.toString(Integer.valueOf(value_first) + Integer.valueOf(value_second));
                     dataStack.push(new Token(TokenType.NUMERIC, value_result));
                     PC++;
                     break;
                 case MINUS:
                     value_first = dataStack.pop().getValue();
                     value_second = dataStack.pop().getValue();
-                    value_result = Integer.toString(Integer.valueOf(value_second) - Integer.valueOf(value_first));
+                    try{
+                        value_result = Integer.toString(Integer.valueOf(value_second) - Integer.valueOf(value_first));
+                    }catch(NumberFormatException not_int){
+                        value_result = Double.toString(Double.valueOf(value_second) - Double.valueOf(value_first));
+                    }
                     dataStack.push(new Token(TokenType.NUMERIC, value_result));
                     PC++;
                     break;
                 case STAR:
                     value_first = dataStack.pop().getValue();
                     value_second = dataStack.pop().getValue();
-                    value_result = Integer.toString(Integer.valueOf(value_second) * Integer.valueOf(value_first));
+                    try{
+                        value_result = Integer.toString(Integer.valueOf(value_second) * Integer.valueOf(value_first));
+                    }catch(NumberFormatException not_int){
+                        value_result = Double.toString(Double.valueOf(value_second) * Double.valueOf(value_first));
+                    }
                     dataStack.push(new Token(TokenType.NUMERIC, value_result));
                     PC++;
                     break;
                 case SLASH:
                     value_first = dataStack.pop().getValue();
                     value_second = dataStack.pop().getValue();
-                    value_result = Integer.toString(Integer.valueOf(value_second) / Integer.valueOf(value_first));
+                    try{
+                        value_result = Integer.toString(Integer.valueOf(value_second) / Integer.valueOf(value_first));
+                    }catch(NumberFormatException not_int){
+                        value_result = Double.toString(Double.valueOf(value_second) / Double.valueOf(value_first));
+                    }
                     dataStack.push(new Token(TokenType.NUMERIC, value_result));
                     PC++;
                     break;

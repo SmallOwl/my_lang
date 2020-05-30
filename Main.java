@@ -17,20 +17,19 @@ public class Main {
 
     public static void main(String[] args) throws LangParseException, LangLexException, IOException, LangLinkException,
             CloneNotSupportedException {
-        // System.out.println("Start lang UI");
-        // Scanner in = new Scanner(System.in);
-        // System.out.print("Input a path to source: ");
-        // String program = readProgram(in.nextLine());
-
-        List<Token> tokens = Lexer.tokenize(readProgram("test/test"));
+        System.out.println("Start lang UI");
+        Scanner in = new Scanner(System.in);
+        System.out.print("Input a path to source: ");
+        String path = in.nextLine();
+        String program = readProgram(path);
+        List<Token> tokens = Lexer.tokenize(program);
         Parser.parse(tokens);
-        tokens = new Loader(tokens, "test/test", true, new ArrayList<>()).Load();
+        tokens = new Loader(tokens, path, true, new ArrayList<>()).Load();
         tokens = Linker.linkAll(tokens);
-
         VM.init();
         VM.loadProgram(tokens);
         VM.run();
-        // in.close();
+        in.close();
     }
 
     private static String readProgram(String path) throws IOException {

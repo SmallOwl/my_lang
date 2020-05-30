@@ -1,0 +1,28 @@
+using '../libraries/LinkedList';
+
+var LinkedList test_linkedlist;
+
+var int i;
+var int size;
+
+{
+    LinkedList_add(@test_linkedlist,2);
+    LinkedList_add(@test_linkedlist,5);
+    LinkedList_add(@test_linkedlist,8);
+    LinkedList_add(@test_linkedlist,3);
+    LinkedList_add(@test_linkedlist,1);
+    println('before delete:');
+    size := LinkedList_size(@test_linkedlist);
+    while (i < size){
+        println(LinkedList_get_element_value_by_index(@test_linkedlist,i));
+        i := i + 1;
+    }
+    LinkedList_delete(@test_linkedlist,8);
+    println('after delete:');
+    i := 0;
+    size := LinkedList_size(@test_linkedlist);
+    while (i < size){
+        println(LinkedList_get_element_value_by_index(@test_linkedlist,i));
+        i := i + 1;
+    }
+}

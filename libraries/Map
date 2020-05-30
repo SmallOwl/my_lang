@@ -45,6 +45,10 @@ function boolean Map_delete_by_key(var ^Map map_pointer, var string search_key){
     }
 }
 
+function int Map_size(var ^Map map_pointer){
+    return MapNode_size(map_pointer^.head);
+}
+
 function boolean MapNode_add(var ^MapNode map_node_pointer, var string add_key, var int add_value){
     if(map_node_pointer^.key = add_key){
         return false;
@@ -102,5 +106,13 @@ function boolean MapNode_delete_by_key(var ^MapNode map_node_pointer, var string
         return true;
     }else{
         MapNode_delete_by_key(map_node_pointer^.next, search_key);
+    }
+}
+
+function int MapNode_size(var ^MapNode map_node_pointer){
+    if(map_node_pointer = 0){
+        return 0;
+    }else{
+        return 1 + MapNode_size(map_node_pointer^.next);
     }
 }

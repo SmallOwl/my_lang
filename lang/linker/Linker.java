@@ -325,15 +325,13 @@ public class Linker {
         return pos;
     }
 
-
-    //Поправить string и double
     private static int linkOperandPart(List<Token> tokens, int pos, String funcName) throws LangLinkException {
         switch(getTokenByPos(tokens, pos).getType()){
             case NUMERIC:
                 pos = linkNumeric(tokens, pos);
                 break;
             case CHARACTER_STRING:
-                pos = linkCharacterString(pos);
+                pos = linkCharacterString(tokens,pos);
                 break;
             case BOOLEAN:
                 pos = linkBoolean(tokens,pos);
@@ -398,6 +396,8 @@ public class Linker {
                 exprType = funcTypeNameDup;
                 tokens.add(pos,new Token(TokenType.IDENTIFIER,varFuncName));
                 pos = linkVar(tokens, pos, funcName);
+            }else{
+                throw new LangLinkException(varFuncName + " is undefined.");
             }
             //
             if(funcParamMap.size() != 0 && funcParamMap.get(varFuncName)!= null && parameterPos < funcParamMap.get(varFuncName).size()){
@@ -609,8 +609,9 @@ public class Linker {
         return varCounter;
     }
 
-    private static int linkCharacterString(int pos) {
+    private static int linkCharacterString(List<Token> tokens, int pos) {
         exprType = "string";
+        getTokenByPos(tokens,pos).setValue(getTokenByPos(tokens, pos).getValue().substring(1, getTokenByPos(tokens, pos).getValue().length()-1));
         pos++;
         return pos;
     }
@@ -629,8 +630,9 @@ public class Linker {
     private static int linkNumeric(List<Token> tokens,int pos) {
         pos++;
         if(tokens.size() > pos && getTokenByPos(tokens,pos).getType().equals(TokenType.DOT)){
-            pos++;
-            pos++;
+            tokens.remove(pos);
+            getTokenByPos(tokens, pos-1).setValue(getTokenByPos(tokens, pos-1).getValue() + "." + getTokenByPos(tokens, pos).getValue());
+            tokens.remove(pos);
             exprType = "double";
         }else{
             exprType = "int";

@@ -1,7 +1,0 @@
-type node{
-    ^MyRec pointer;
-}
-type MyRec{
-    int value;
-    node next;
-}

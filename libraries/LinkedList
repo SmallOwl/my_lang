@@ -32,6 +32,13 @@ function ^LinkedListNode LinkedList_get_element_pointer_by_value(var ^LinkedList
     return LinkedListNode_get_element_pointer_by_value(root^.head,search_value);
 }
 
+function boolean LinkedList_delete(var ^LinkedList root, var int delete_value){
+    var ^LinkedListNode node_pointer;
+    var int index;
+    index := LinkedList_get_index_by_element_value(root, delete_value);
+    node_pointer := LinkedList_get_element_pointer_by_index(root, index - 1);
+    node_pointer^.next := node_pointer^.next^.next;
+}
 
 function int LinkedList_get_element_value_by_index(var ^LinkedList root, var int search_index){
     var ^LinkedListNode node_pointer;

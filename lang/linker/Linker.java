@@ -546,7 +546,6 @@ public class Linker {
         // to.add(0, new Token(TokenType.DOG, "@"));
         address = true;
         linkOperand(to, 0, varFuncName);
-        String varExprType = exprType;
         if(exprType.contains("^") || typeMap.get(exprType) == 1){
             linkExpression(value, 0, funcName);
             // if(!varExprType.equals("pointer") && !exprType.equals("pointer") && !varExprType.equals(exprType)){//Изменил. Смотреть в бекапах
@@ -559,6 +558,7 @@ public class Linker {
             SEMICOLONCounter++;
         }else if(typeMap.get(exprType) > 1){
             throw new LangLinkException("Now you can't use multi assign for difficult types");
+            // String varExprType = exprType;
             // linkVarFuncUse(value, 0, funcName);
             // if(!varExprType.equals(exprType)){//Изменил. Смотреть в бекапах
             //     throw new LangLinkException(varExprType + " expected, but " + exprType + " found.");

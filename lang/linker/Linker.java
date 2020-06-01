@@ -286,6 +286,8 @@ public class Linker {
             pos++;
             tokens.add(pos, new Token(TokenType.DROP,"DROP"));
             pos++;
+            //проверить говно
+            getTokenByPos(tokens,posDump).setValue(Integer.toString(pos - SEMICOLONCounter - NORPNDeleteCounter-BRACKETCounter));
         }else{
             getTokenByPos(tokens,posDump).setValue(Integer.toString(pos - SEMICOLONCounter - NORPNDeleteCounter-BRACKETCounter));
         }
